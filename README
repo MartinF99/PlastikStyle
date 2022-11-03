@@ -1,7 +1,7 @@
 CMake Qt5 GUI Template
 ----------------------
 
-You need Qt5 and CMake 2.8.11 or higher
+You need Qt5 and CMake 3.16 or higher as well as qt 6.2 or higher
 
 -- Build instructions --
 
@@ -9,8 +9,11 @@ cd /your/project/build
 cmake ../
 make
 
-./plastikstyle
+and make install
 
+also in the cmake file change qmake6 to whatever qmake for qt6 is called on your system
+
+sry, currently i haven't figured out how to find the plugin dir with Qt6
 
 -- Tutorials and resources --
 
