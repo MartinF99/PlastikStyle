@@ -6,7 +6,6 @@ To build against Qt6, Qt 6.2 is required
 
 -- Build instructions --
 
-option ENABLE_QT5 (default ON) build QT5 style
 option ENABLE_QT6 (default ON) build QT6 style
 
 !! you might need to change the qmake call in qt6/CMakeLists.txt to the name of your qt6 QMake executable

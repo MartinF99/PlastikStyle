@@ -11,14 +11,14 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-# Find the QtWidgets library
 
 option(ENABlE_QT5 "build with QT5" ON)
+
 option(ENABLE_QT6 "build with QT6" ON)
 
-if(ENABLE_QT5)
+#if(ENABLE_QT5)
 	add_subdirectory(qt5)
-endif()
+#endif()
 
 if(ENABLE_QT6)
 	add_subdirectory(qt6)
