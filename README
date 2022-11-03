@@ -1,21 +1,18 @@
-CMake Qt5 GUI Template
+Plastik style (a fork of Qt5 styleplugins' plastique style
 ----------------------
 
-You need Qt5 and CMake 3.16 or higher as well as qt 6.2 or higher
+To build against Qt5 you need Qt 5.15 and CMake 3.16 or higher
+To build against Qt6, Qt 6.2 is required
 
 -- Build instructions --
 
-cd /your/project/build
-cmake ../
+option ENABLE_QT5 (default ON) build QT5 style
+option ENABLE_QT6 (default ON) build QT6 style
+
+!! you might need to change the qmake call in qt6/CMakeLists.txt to the name of your qt6 QMake executable
+
+cd PlastikStyle/build
+cmake ../ 
 make
 
-and make install
-
-also in the cmake file change qmake6 to whatever qmake for qt6 is called on your system
-
-sry, currently i haven't figured out how to find the plugin dir with Qt6
-
--- Tutorials and resources --
-
-Qt online docs
-https://doc.qt.io/
+make install 
