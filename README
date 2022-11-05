@@ -5,12 +5,21 @@ To build against Qt5 you need Qt 5.15 and CMake 3.16 or higher
 To build against Qt6, Qt 6.2 is required
 
 -- Build instructions --
+option ENABLE_ALL => enables Qt5 and Qt6 support *default on
+option ENABLE_QT5 => enables Qt5 support (need to have -DENABLE_ALL=off)
+option ENABLE_QT6 => enables Qt6 support (need to have -DENABLE_ALL=off)
 
-option ENABLE_QT6 (default ON) build QT6 style
+e.g:
+    cmake -DENABLE_ALL=off -DENABLE_QT5 => builds only qt5 variant
+    cmake -DENABLE_ALL=off -DENABLE_QT6 => builds only qt6 variant
+
 
 mkdir PlastikStyle/build
+
 cd PlastikStyle/build
-cmake ../ 
+
+cmake ../
+
 make
 
 make install 

@@ -12,14 +12,16 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-option(ENABlE_QT5 "build with QT5" ON)
+option(ENABLE_ALL "build with QT5 and QT6" ON)
 
-option(ENABLE_QT6 "build with QT6" ON)
+option(ENABlE_QT5 "build with QT5" OFF)
 
-#if(ENABLE_QT5)
+option(ENABLE_QT6 "build with QT6" OFF)
+
+if(ENABLE_QT5 OR ENABLE_ALL)
 	add_subdirectory(qt5)
-#endif()
+endif()
 
-if(ENABLE_QT6)
+if(ENABLE_QT6 OR ENABLE_ALL)
 	add_subdirectory(qt6)
 endif()

@@ -1,0 +1,140 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "qt5",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-qt5-Debug-2018fc36ff832368360e.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "qt5",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				},
+				{
+					"build" : "qt6",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-qt6-Debug-efd1f3cac1f29fbce7f8.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "qt6",
+					"targetIndexes" : 
+					[
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2
+					],
+					"name" : "PlastikStyle",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "plastikstyle5::@fd737e70da1a34ea1f7b",
+					"jsonFile" : "target-plastikstyle5-Debug-e5b7f383355185338c4a.json",
+					"name" : "plastikstyle5",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "plastikstyle5_autogen::@fd737e70da1a34ea1f7b",
+					"jsonFile" : "target-plastikstyle5_autogen-Debug-18a83e9f64e8d814d939.json",
+					"name" : "plastikstyle5_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "plastikstyle5_autogen_timestamp_deps::@fd737e70da1a34ea1f7b",
+					"jsonFile" : "target-plastikstyle5_autogen_timestamp_deps-Debug-d8f1cf2f9d607e3f887e.json",
+					"name" : "plastikstyle5_autogen_timestamp_deps",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "plastikstyle6::@1e7f8ccdfeca90727e3a",
+					"jsonFile" : "target-plastikstyle6-Debug-2549bdfb375d7388e215.json",
+					"name" : "plastikstyle6",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "plastikstyle6_autogen::@1e7f8ccdfeca90727e3a",
+					"jsonFile" : "target-plastikstyle6_autogen-Debug-8015e24be0e08467e11a.json",
+					"name" : "plastikstyle6_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "plastikstyle6_autogen_timestamp_deps::@1e7f8ccdfeca90727e3a",
+					"jsonFile" : "target-plastikstyle6_autogen_timestamp_deps-Debug-78e61f7494c5b80c5736.json",
+					"name" : "plastikstyle6_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/keit/projects/PlastikStyle/build",
+		"source" : "/home/keit/projects/PlastikStyle"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}
