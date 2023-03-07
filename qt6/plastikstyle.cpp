@@ -87,7 +87,7 @@ static const int blueFrameWidth =  2;  // with of line edit focus frame
 
 #include "qstylehelper.h"
 #include "qstylecache.h"
-#include <QMutableVectorIterator>
+#include "qvector.h"
 
 // from windows style
 static const int windowsItemFrame        =  2; // menu item frame width
