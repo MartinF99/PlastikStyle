@@ -1,6 +1,5 @@
 find_package(Qt6 CONFIG REQUIRED Core Widgets)
 
-qt_standard_project_setup()
 
 set(plastikstyle6_SRC
   plastikstyle.cpp
