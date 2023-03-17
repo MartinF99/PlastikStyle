@@ -43,10 +43,10 @@
 #define QSTYLECACHE_P_H
 
 
-#include <QtGui/qimage.h>
-#include <QtGui/qpixmap.h>
-#include <QtGui/qpainter.h>
-#include <QtGui/qpixmapcache.h>
+#include <QImage>
+#include <QPixmap>
+#include <QPainter>
+#include <QPixmapCache>
 #include "qstylehelper.h"
 
 //

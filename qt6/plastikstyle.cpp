@@ -47,27 +47,27 @@ static const bool AnimateProgressBar = true;
 static const int ProgressBarFps = 25;
 static const int blueFrameWidth =  2;  // with of line edit focus frame
 
-#include <qapplication.h>
-#include <qbitmap.h>
-#include <qabstractitemview.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qdebug.h>
-#include <qdialogbuttonbox.h>
-#include <qformlayout.h>
-#include <qgroupbox.h>
-#include <qimage.h>
-#include <qlineedit.h>
-#include <qmainwindow.h>
-#include <qmenu.h>
-#include <qmenubar.h>
-#include <qpainter.h>
-#include <qpaintengine.h>
-#include <qpainterpath.h>
-#include <qpalette.h>
-#include <qpen.h>
-#include <qpixmap.h>
-#include <qpixmapcache.h>
+#include <QApplication>
+#include <QBitmap>
+#include <QAbstractItemView>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QDebug>
+#include <QDialogButtonBox>
+#include <QFormLayout>
+#include <QGroupBox>
+#include <QImage>
+#include <QLineEdit>
+#include <QMainWindow>
+#include <QMenu>
+#include <QMenuBar>
+#include <QPainter>
+#include <QPaintEngine>
+#include <QPainterPath>
+#include <QPalette>
+#include <QPen>
+#include <QPixmap>
+#include <QPixmapCache>
 #include <qprogressbar.h>
 #include <qpushbutton.h>
 #include <qradiobutton.h>
@@ -84,10 +84,11 @@ static const int blueFrameWidth =  2;  // with of line edit focus frame
 #include <qvarlengtharray.h>
 #include <limits.h>
 #include <qstylefactory.h>
+#include <QMutableListIterator>
 
 #include "qstylehelper.h"
 #include "qstylecache.h"
-#include "qvector.h"
+
 
 // from windows style
 static const int windowsItemFrame        =  2; // menu item frame width
@@ -455,7 +456,7 @@ static void qBrushSetAlphaF(QBrush *brush, qreal alpha)
     if (const QGradient *gradient = brush->gradient()) {
         // Use the gradient. Call QColor::setAlphaF() on all color stops.
         QGradientStops stops = gradient->stops();
-        QMutableVectorIterator<QGradientStop> it(stops);
+        QMutableListIterator<QGradientStop> it(stops);
         QColor tmpColor;
         while (it.hasNext()) {
             it.next();
@@ -521,7 +522,7 @@ static QBrush qBrushLight(QBrush brush, int light)
     if (const QGradient *gradient = brush.gradient()) {
         // Use the gradient. Call QColor::lighter() on all color stops.
         QGradientStops stops = gradient->stops();
-        QMutableVectorIterator<QGradientStop> it(stops);
+        QMutableListIterator<QGradientStop> it(stops);
         while (it.hasNext()) {
             it.next();
             it.setValue(QPair<qreal, QColor>(it.value().first, it.value().second.lighter(light)));
@@ -583,7 +584,7 @@ static QBrush qBrushDark(QBrush brush, int dark)
     if (const QGradient *gradient = brush.gradient()) {
         // Use the gradient. Call QColor::darker() on all color stops.
         QGradientStops stops = gradient->stops();
-        QMutableVectorIterator<QGradientStop> it(stops);
+        QMutableListIterator<QGradientStop> it(stops);
         while (it.hasNext()) {
             it.next();
             it.setValue(QPair<qreal, QColor>(it.value().first, it.value().second.darker(dark)));
