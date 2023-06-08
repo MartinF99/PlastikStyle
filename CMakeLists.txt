@@ -18,8 +18,10 @@ option(ENABlE_QT5 "build with QT5" OFF)
 
 option(ENABLE_QT6 "build with QT6" OFF)
 
+option(ENABLE_QSTYLE "build Qstyles" ON)
+
 if(ENABLE_QT5 OR ENABLE_ALL)
-	add_subdirectory(qt5)
+		add_subdirectory(qt5)
 endif()
 
 if(ENABLE_QT6 OR ENABLE_ALL)
