@@ -43,7 +43,7 @@
 
 static const bool AnimateBusyProgressBar = true;
 static const bool AnimateProgressBar = true;
-// #define QPlastique_MaskButtons
+#define QPlastique_MaskButtons
 static const int ProgressBarFps = 25;
 static const int blueFrameWidth =  2;  // with of line edit focus frame
 
@@ -3663,6 +3663,9 @@ void PlastikStyle::drawComplexControl(ComplexControl control, const QStyleOption
 
     switch (control) {
 #ifndef QT_NO_SLIDER
+    // TODO: make the sliders look a tad bit nicer
+    // TODO: paint in color from start to slider position
+    // TODO: Add hover effect when sliderhandle is active
     case CC_Slider:
         if (const QStyleOptionSlider *slider = qstyleoption_cast<const QStyleOptionSlider *>(option)) {
             QRect grooveRegion = proxy()->subControlRect(CC_Slider, option, SC_SliderGroove, widget);
@@ -3764,15 +3767,19 @@ void PlastikStyle::drawComplexControl(ComplexControl control, const QStyleOption
                         }
                         if (slider->state & State_Enabled) {
                             QLinearGradient gradient(pixmapRect.center().x(), pixmapRect.top(),
-                                                     pixmapRect.center().x(), pixmapRect.bottom());
+                                                    pixmapRect.center().x(), pixmapRect.bottom());
+                            // paint the slider handle lighter if it is active and pressed
+                            // otherwise paint it normally
+                            //TODO: Add an indicator for when it is hovered over,
                             if ((option->activeSubControls & SC_SliderHandle) && (option->state & State_Sunken)) {
                                 gradient.setColorAt(0, gradientStartColor.lighter(110));
                                 gradient.setColorAt(1, gradientStopColor.lighter(110));
-                            } else {
+                            }else {
                                 gradient.setColorAt(0, gradientStartColor);
                                 gradient.setColorAt(1, gradientStopColor);
                             }
                             handlePainter.fillPath(path, gradient);
+
                         } else {
                             handlePainter.fillPath(path, slider->palette.window());
                         }
@@ -5581,6 +5588,9 @@ void PlastikStyle::polish(QWidget *widget)
 #ifndef QT_NO_TABBAR
         || qobject_cast<QTabBar *>(widget)
 #endif
+#ifndef QT_NO_SLIDER // make slider handle be hoverable necessary for accenting hovered slider handle
+        || qobject_cast<QSlider *>(widget)
+#endif
         ) {
         widget->setAttribute(Qt::WA_Hover);
     }
@@ -5636,10 +5646,17 @@ void PlastikStyle::unpolish(QWidget *widget)
 #ifndef QT_NO_TABBAR
         || qobject_cast<QTabBar *>(widget)
 #endif
-        || qobject_cast<QRadioButton *>(widget)) {
+        || qobject_cast<QRadioButton *>(widget))
+    {
         widget->setAttribute(Qt::WA_Hover, false);
     }
 
+#ifndef QT_NO_SLIDER
+    if (qobject_cast<QSlider *>(widget))
+    {
+        widget->setAttribute(Qt::WA_Hover, true);
+    }
+#endif
     if (widget->inherits("QDockSeparator")
         || widget->inherits("QDockWidgetSeparator")) {
         widget->setAttribute(Qt::WA_Hover, false);
@@ -5792,10 +5809,7 @@ bool PlastikStyle::eventFilter(QObject *watched, QEvent *event)
         if (QProgressBar *bar = qobject_cast<QProgressBar *>(watched)) {
             // Animation by timer for progress bars that have their min and
             // max values the same
-            if (bar->minimum() == bar->maximum())
-                startProgressAnimation(bar);
-            else
-                stopProgressAnimation(bar);
+            startProgressAnimation(reinterpret_cast<QProgressBar *>(watched));
         }
         break;
     case QEvent::Destroy:

@@ -43,7 +43,7 @@
 
 static const bool AnimateBusyProgressBar = true;
 static const bool AnimateProgressBar = true;
-// #define QPlastique_MaskButtons
+#define QPlastique_MaskButtons
 static const int ProgressBarFps = 25;
 static const int blueFrameWidth =  2;  // with of line edit focus frame
 
@@ -5788,10 +5788,7 @@ bool PlastikStyle::eventFilter(QObject *watched, QEvent *event)
         if (QProgressBar *bar = qobject_cast<QProgressBar *>(watched)) {
             // Animation by timer for progress bars that have their min and
             // max values the same
-            if (bar->minimum() == bar->maximum())
-                startProgressAnimation(bar);
-            else
-                stopProgressAnimation(bar);
+            startProgressAnimation(reinterpret_cast<QProgressBar *>(watched));
         }
         break;
     case QEvent::Destroy:
