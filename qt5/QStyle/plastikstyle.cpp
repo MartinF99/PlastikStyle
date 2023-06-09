@@ -44,7 +44,7 @@
 static const bool AnimateBusyProgressBar = true;
 static const bool AnimateProgressBar = true;
 #define QPlastique_MaskButtons
-static const int ProgressBarFps = 25;
+static const int ProgressBarFps = 30;
 static const int blueFrameWidth =  2;  // with of line edit focus frame
 
 #include <qapplication.h>
@@ -861,7 +861,12 @@ static void qt_plastique_drawShadedPanel(QPainter *painter, const QStyleOption *
             qt_plastique_draw_gradient(painter, rect.adjusted(1, 1, -1, -1),
                                        option->palette.button().color().darker(114),
                                        option->palette.button().color().darker(106));
-        } else {
+        }
+        else if((option->state & QStyle::State_MouseOver)) // paint a gradient when something is just hovered
+        {
+            qt_plastique_draw_gradient(painter, rect.adjusted(1,1,-1,-1), option->palette.button().color().darker(106), option->palette.button().color().darker(98));
+        }
+        else {
             qt_plastique_draw_gradient(painter, rect.adjusted(1, 1, -1, -1),
                                        base ? option->palette.window().color().lighter(105) : gradientStartColor,
                                        base ? option->palette.window().color().darker(102) : gradientStopColor);
@@ -2947,7 +2952,7 @@ void PlastikStyle::drawControl(ControlElement element, const QStyleOption *optio
 #ifndef QT_NO_MENUBAR
     case CE_MenuBarItem:
         // Draws a menu bar item; File, Edit, Help etc..
-        if ((option->state & State_Selected)) {
+        if ((option->state & State_Selected) || (option->state & State_MouseOver)) {
             QPixmap cache;
             QString pixmapName = QStyleHelper::uniqueName(QLatin1String("menubaritem"), option, option->rect.size());
             if (!QPixmapCache::find(pixmapName, &cache)) {
@@ -2963,7 +2968,8 @@ void PlastikStyle::drawControl(ControlElement element, const QStyleOption *optio
                     qt_plastique_draw_gradient(&cachePainter, rect.adjusted(1, 1, -1, -1),
                                                option->palette.button().color().darker(114),
                                                option->palette.button().color().darker(106));
-                } else {
+                }
+                else {
                     qt_plastique_draw_gradient(&cachePainter, rect.adjusted(1, 1, -1, -1),
                                                option->palette.window().color().lighter(105),
                                                option->palette.window().color().darker(102));
@@ -3725,6 +3731,8 @@ void PlastikStyle::drawComplexControl(ComplexControl control, const QStyleOption
                     p->drawPoints(points, 4);
                 }
                 END_STYLE_PIXMAPCACHE
+                // TODO: make a new Pixmap clipRect, that is actually painted in the darker progressbar gradient, and drawn above slider
+                // TODO:This should allow us to highlight our slider position better. AKA slider highlight
             }
 
             if ((option->subControls & SC_SliderHandle) && handle.isValid()) {
@@ -5786,9 +5794,15 @@ bool PlastikStyle::eventFilter(QObject *watched, QEvent *event)
     case QEvent::Paint:
     case QEvent::Show:
         if (QProgressBar *bar = qobject_cast<QProgressBar *>(watched)) {
-            // Animation by timer for progress bars that have their min and
-            // max values the same
-            startProgressAnimation(reinterpret_cast<QProgressBar *>(watched));
+            // Do we animate our progress bar?
+            // OR: Do we animate our busy ProgressBar and is our bar -> minimum == bar->maximum
+            if(AnimateProgressBar || (AnimateBusyProgressBar && bar->minimum() == bar->maximum()))
+            {
+                startProgressAnimation(reinterpret_cast<QProgressBar *>(watched));
+                break;
+            }
+            // stop the animation if not
+            stopProgressAnimation(reinterpret_cast<QProgressBar *>(watched));
         }
         break;
     case QEvent::Destroy:
