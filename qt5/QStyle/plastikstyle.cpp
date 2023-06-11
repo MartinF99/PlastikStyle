@@ -2466,18 +2466,18 @@ void PlastikStyle::drawControl(ControlElement element, const QStyleOption *optio
             if (flip) {
                 int indicatorPos = rect.width() - progressIndicatorPos;
                 if (indicatorPos >= 0 && indicatorPos <= rect.width()) {
-                    painter->setPen(bar->palette.base().color());
+                    painter->setPen(bar->palette.highlightedText().color());
                     leftRect = QRect(rect.left(), rect.top(), indicatorPos, rect.height());
                 } else if (indicatorPos > rect.width()) {
                     painter->setPen(bar->palette.text().color());
                 } else {
-                    painter->setPen(bar->palette.base().color());
+                    painter->setPen(bar->palette.highlightedText().color());
                 }
             } else {
                 if (progressIndicatorPos >= 0 && progressIndicatorPos <= rect.width()) {
                     leftRect = QRect(rect.left(), rect.top(), progressIndicatorPos, rect.height());
                 } else if (progressIndicatorPos > rect.width()) {
-                    painter->setPen(bar->palette.base().color());
+                    painter->setPen(bar->palette.highlightedText().color());
                 } else {
                     painter->setPen(bar->palette.text().color());
                 }
@@ -2488,7 +2488,7 @@ void PlastikStyle::drawControl(ControlElement element, const QStyleOption *optio
             painter->setClipRegion(rightRect);
             painter->drawText(rect, bar->text, QTextOption(Qt::AlignAbsolute | Qt::AlignHCenter | Qt::AlignVCenter));
             if (!leftRect.isNull()) {
-                painter->setPen(flip ? bar->palette.text().color() : bar->palette.base().color());
+                painter->setPen(flip ? bar->palette.text().color() : bar->palette.highlightedText().color());
                 painter->setClipRect(leftRect);
                 painter->drawText(rect, bar->text, QTextOption(Qt::AlignAbsolute | Qt::AlignHCenter | Qt::AlignVCenter));
             }
