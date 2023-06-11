@@ -2969,6 +2969,12 @@ void PlastikStyle::drawControl(ControlElement element, const QStyleOption *optio
                                                option->palette.button().color().darker(114),
                                                option->palette.button().color().darker(106));
                 }
+                else if ((option->state & QStyle::State_HasFocus))
+                {
+                    qt_plastique_draw_gradient(&cachePainter, rect.adjusted(1,1, -1, -1),
+                                               option->palette.button().color().darker(104),
+                                               option->palette.button().color().darker(98));
+                }
                 else {
                     qt_plastique_draw_gradient(&cachePainter, rect.adjusted(1, 1, -1, -1),
                                                option->palette.window().color().lighter(105),
@@ -5798,6 +5804,11 @@ bool PlastikStyle::eventFilter(QObject *watched, QEvent *event)
             // OR: Do we animate our busy ProgressBar and is our bar -> minimum == bar->maximum
             if(AnimateProgressBar || (AnimateBusyProgressBar && bar->minimum() == bar->maximum()))
             {
+                if(bar->value() == bar->maximum() && !(bar->minimum() == bar->maximum()))
+                {
+                    stopProgressAnimation(reinterpret_cast<QProgressBar *>(watched));
+                    break;
+                }
                 startProgressAnimation(reinterpret_cast<QProgressBar *>(watched));
                 break;
             }
