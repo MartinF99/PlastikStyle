@@ -1,4 +1,7 @@
-# Plastik style (a fork of Qt5 styleplugins' plastique style
+# Plastik style
+
+This is a fork of QPlastiqueStyle from qt5-styleplugins and a port to qt6.
+
 ----------------------
 
 ## Requirements
