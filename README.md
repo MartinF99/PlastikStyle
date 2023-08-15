@@ -24,10 +24,12 @@ e.g:o
     cmake => without any options both are build
 
 ### For normal build
+    
+    cd into cloned repo (usually PlastikStyle
+    
+    mkdir build
 
-    mkdir PlastikStyle/build
-
-    cd PlastikStyle/build
+    cd build
 
     cmake ../
 
