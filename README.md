@@ -25,7 +25,7 @@ e.g:o
 
 ### For normal build
     
-    cd into cloned repo (usually PlastikStyle
+    cd into cloned repo (usually PlastikStyle)
     
     mkdir build
 
