@@ -5509,10 +5509,11 @@ QT_END_NAMESPACE:
             }
         }
     default:
-        break;
+        return QProxyStyle::pixelMetric(metric, option, widget);
     }
-
-    return ret != -1 ? ret : QProxyStyle::pixelMetric(metric, option, widget);
+    if (ret < 0) return QProxyStyle::pixelMetric(metric, option, widget);
+    ret = dpiScaled(ret, option);
+    return ret;
 }
 
 /*!
@@ -5915,5 +5916,30 @@ void PlastikStyle::stopProgressAnimation(QProgressBar *bar)
         }
     }
 }
+
+qreal PlastikStyle::defaultDPI() const
+{
+    return QGuiApplication::primaryScreen()->logicalDotsPerInchX(); // might be another function
+}
+qreal PlastikStyle::dpiScaled(qreal value, qreal dpi) const
+{
+    return value*dpi/baseDPI;
+}
+qreal PlastikStyle::dpiScaled(qreal value, const QStyleOption* option) const
+{
+    qreal dpi = defaultDPI();
+    if(option)
+    {
+        dpi = option->fontMetrics.fontDpi();
+    }
+    return dpiScaled(value, dpi);
+}
+
+qreal PlastikStyle::dpiScaled(qreal vale, const QPaintDevice *device) const
+{
+    return dpiScaled(vale, device->logicalDpiX());
+}
+
+
 
 

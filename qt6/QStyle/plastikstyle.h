@@ -59,8 +59,12 @@ protected:
     void startProgressAnimation(QProgressBar *bar);
     void stopProgressAnimation(QProgressBar *bar);
     //void drawSliderGroove(const QStyleOptionSlider *slider, QPainter *painter, QWidget *widget=nullptr);
-
+    qreal dpiScaled(qreal value, qreal dpi) const;
+    qreal dpiScaled(qreal value, const QStyleOption* option) const;
+    qreal dpiScaled(qreal value, const QPaintDevice* device) const;
+    qreal defaultDPI() const; // return 96 or primary Screen dpi
 private:
+    const qreal baseDPI=96; // doesn't work on mac'
     int animateStep;
     QList<QProgressBar *> bars;
     int progressBarAnimateTimer;
