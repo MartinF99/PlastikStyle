@@ -3324,24 +3324,9 @@ void PlastikStyle::drawControl(ControlElement element, const QStyleOption *optio
     case CE_ScrollBarAddLine:
         if (const QStyleOptionSlider *scrollBar = qstyleoption_cast<const QStyleOptionSlider *>(option)) {
 
-            QRect scrollBarAddLine = scrollBar->rect;
-
             bool horizontal = scrollBar->orientation == Qt::Horizontal;
             bool reverse = scrollBar->direction == Qt::RightToLeft;
             bool sunken = scrollBar->state & State_Sunken;
-            bool isEnabled = scrollBar->state & State_Enabled;
-
-            // The SubLine (down/right) buttons
-            QRect addButton1;
-            QRect addButton2;
-            int scrollBarExtent = proxy()->pixelMetric(PM_ScrollBarExtent, option, widget);
-            if (horizontal) {
-                addButton1.setRect(scrollBarAddLine.right(), scrollBarAddLine.top(), scrollBarExtent, scrollBarAddLine.height());
-                addButton2.setRect(scrollBarAddLine.left() + (scrollBarExtent - 1), scrollBarAddLine.top(), scrollBarExtent, scrollBarAddLine.height());
-            } else {
-                addButton1.setRect(scrollBarAddLine.left(), scrollBarAddLine.top(), scrollBarAddLine.width(), scrollBarExtent);
-                addButton2.setRect(scrollBarAddLine.left(), scrollBarAddLine.top() + (scrollBarExtent - 1), scrollBarAddLine.width(), scrollBarExtent);
-            }
 
             QString addLinePixmapName = QStyleHelper::uniqueName(QLatin1String("scrollbar_addline"), option, option->rect.size());
             QPixmap cache;
@@ -3352,33 +3337,32 @@ void PlastikStyle::drawControl(ControlElement element, const QStyleOption *optio
                 QPainter addLinePainter(&cache);
                 addLinePainter.fillRect(pixmapRect, option->palette.window());
 
-                if (isEnabled) {
-                    // Gradients
+                if (option->state & State_Enabled) {
+                    // Gradient
+                    QLinearGradient gradient(pixmapRect.center().x(), pixmapRect.top() + 2,
+                                             pixmapRect.center().x(), pixmapRect.bottom() - 2);
                     if ((scrollBar->activeSubControls & SC_ScrollBarAddLine) && sunken) {
-                        qt_plastique_draw_gradient(&addLinePainter,
-                                                   QRect(pixmapRect.left() + 2, pixmapRect.top() + 2,
-                                                         pixmapRect.right() - 3, pixmapRect.bottom() - 3),
-                                                   gradientStopColor,
-                                                   gradientStopColor);
+                        gradient.setColorAt(0, gradientStopColor);
+                        gradient.setColorAt(1, gradientStopColor);
                     } else {
-                        qt_plastique_draw_gradient(&addLinePainter,
-                                                   QRect(pixmapRect.left() + 2, pixmapRect.top() + 2,
-                                                         pixmapRect.right() - 3, pixmapRect.bottom() - 3),
-                                                   gradientStartColor.lighter(105),
-                                                   gradientStopColor);
+                        gradient.setColorAt(0, gradientStartColor.lighter(105));
+                        gradient.setColorAt(1, gradientStopColor);
                     }
+                    addLinePainter.fillRect(pixmapRect.left() + 2, pixmapRect.top() + 2,
+                                            pixmapRect.right() - 3, pixmapRect.bottom() - 3,
+                                            gradient);
                 }
 
                 // Details
                 QImage addButton;
                 if (horizontal) {
-                    addButton = QImage(reverse ? qt_scrollbar_button_right : qt_scrollbar_button_left);
+                    addButton = QImage(reverse ? qt_scrollbar_button_left : qt_scrollbar_button_right);
                 } else {
                     addButton = QImage(qt_scrollbar_button_down);
                 }
                 addButton.setColor(1, alphaCornerColor.rgba());
                 addButton.setColor(2, borderColor.rgba());
-                if ((scrollBar->activeSubControls & SC_ScrollBarSubLine) && sunken) {
+                if ((scrollBar->activeSubControls & SC_ScrollBarAddLine) && sunken) {
                     addButton.setColor(3, gradientStopColor.rgba());
                     addButton.setColor(4, gradientStopColor.rgba());
                 } else {
@@ -3388,7 +3372,7 @@ void PlastikStyle::drawControl(ControlElement element, const QStyleOption *optio
                 addButton.setColor(5, scrollBar->palette.text().color().rgba());
                 addLinePainter.drawImage(pixmapRect, addButton);
 
-                // Arrows
+                // Arrow
                 if (horizontal) {
                     QImage arrow(reverse ? qt_scrollbar_button_arrow_left : qt_scrollbar_button_arrow_right);
                     arrow.setColor(1, scrollBar->palette.windowText().color().rgba());
@@ -3397,7 +3381,7 @@ void PlastikStyle::drawControl(ControlElement element, const QStyleOption *optio
                         addLinePainter.translate(1, 1);
                     addLinePainter.drawImage(QPoint(pixmapRect.center().x() - 2, pixmapRect.center().y() - 3), arrow);
                 } else {
-                    QImage arrow(qt_scrollbar_button_arrow_up);
+                    QImage arrow(qt_scrollbar_button_arrow_down);
                     arrow.setColor(1, scrollBar->palette.windowText().color().rgba());
 
                     if ((scrollBar->activeSubControls & SC_ScrollBarAddLine) && sunken)
@@ -3407,8 +3391,7 @@ void PlastikStyle::drawControl(ControlElement element, const QStyleOption *optio
                 addLinePainter.end();
                 QPixmapCache::insert(addLinePixmapName, cache);
             }
-            painter->drawPixmap(addButton1.topLeft(), cache);
-            painter->drawPixmap(addButton2.topLeft(), cache);
+            painter->drawPixmap(option->rect.topLeft(), cache);
         }
         break;
     case CE_ScrollBarSubPage:
