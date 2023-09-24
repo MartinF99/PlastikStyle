@@ -2777,20 +2777,20 @@ void PlastikStyle::drawControl(ControlElement element, const QStyleOption *optio
 
             if (menuItem->menuItemType == QStyleOptionMenuItem::Separator) {
                 painter->fillRect(menuItem->rect, option->palette.window().color().lighter(103));
-
+                int margin = dpiScaled(5, option);
                 int w = 0;
                 if (!menuItem->text.isEmpty()) {
                     painter->setFont(menuItem->font);
                     proxy()->drawItemText(painter, menuItem->rect.adjusted(5, 0, -5, 0), Qt::AlignLeft | Qt::AlignVCenter,
                                  menuItem->palette, menuItem->state & State_Enabled, menuItem->text,
                                  QPalette::Text);
-                    w = menuItem->fontMetrics.horizontalAdvance(menuItem->text) + 5;
+                    w = menuItem->fontMetrics.horizontalAdvance(menuItem->text) + margin;
                 }
 
                 painter->setPen(alphaCornerColor);
                 bool reverse = menuItem->direction == Qt::RightToLeft;
-                painter->drawLine(menuItem->rect.left() + 5 + (reverse ? 0 : w), menuItem->rect.center().y(),
-                                  menuItem->rect.right() - 5 - (reverse ? w : 0), menuItem->rect.center().y());
+                painter->drawLine(menuItem->rect.left() + margin + (reverse ? 0 : w), menuItem->rect.center().y(),
+                                  menuItem->rect.right() - margin - (reverse ? w : 0), menuItem->rect.center().y());
 
                 painter->restore();
                 break;
@@ -2835,12 +2835,13 @@ void PlastikStyle::drawControl(ControlElement element, const QStyleOption *optio
                         button.palette = menuItem->palette;
                         proxy()->drawPrimitive(PE_IndicatorCheckBox, &button, painter, widget);
                     } else if (checked) {
-                        int iconSize = qMax(menuItem->maxIconWidth, 20);
+                        qreal iconMinSize = dpiScaled(20, option);
+                        int iconSize = qMax(menuItem->maxIconWidth, (int)iconMinSize);
                         QRect sunkenRect(option->rect.left() + 1,
                                          option->rect.top() + (option->rect.height() - iconSize) / 2 + 1,
                                          iconSize, iconSize);
-                        sunkenRect = visualRect(menuItem->direction, menuItem->rect, sunkenRect);
-
+                        QRect vSunkenRect = visualRect(menuItem->direction, menuItem->rect, sunkenRect);
+                        sunkenRect.moveCenter(vSunkenRect.center());
                         QStyleOption opt = *option;
                         opt.state |= State_Sunken;
                         opt.rect = sunkenRect;
@@ -2854,24 +2855,22 @@ void PlastikStyle::drawControl(ControlElement element, const QStyleOption *optio
             bool act = menuItem->state & State_Selected;
             const QStyleOption *opt = option;
             const QStyleOptionMenuItem *menuitem = menuItem;
-            int checkcol = qMax(menuitem->maxIconWidth, 20);
+            int checkcol = qMax<int>(menuitem->maxIconWidth, dpiScaled(20,option));
             QPainter *p = painter;
             QRect vCheckRect = visualRect(opt->direction, menuitem->rect,
-                                          QRect(menuitem->rect.x(), menuitem->rect.y(),
+                                          QRect(menuitem->rect.x() + windowsItemFrame , menuitem->rect.y(),
                                                 checkcol, menuitem->rect.height()));
             if (!menuItem->icon.isNull()) {
                 QIcon::Mode mode = dis ? QIcon::Disabled : QIcon::Normal;
                 if (act && !dis)
                     mode = QIcon::Active;
                 QPixmap pixmap;
+                QSize iconSize(pixelMetric(PM_SmallIconSize, option, widget), pixelMetric(PM_SmallIconSize, option, widget));
                 if (checked)
-                    pixmap = menuItem->icon.pixmap(pixelMetric(PM_SmallIconSize, option, widget), mode, QIcon::On);
+                    pixmap = menuItem->icon.pixmap(iconSize, painter->device()->devicePixelRatio(), mode, QIcon::On);
                 else
-                    pixmap = menuItem->icon.pixmap(pixelMetric(PM_SmallIconSize, option, widget), mode);
-                int pixw = pixmap.width();
-                int pixh = pixmap.height();
-
-                QRect pmr(0, 0, pixw, pixh);
+                    pixmap = menuItem->icon.pixmap(iconSize, painter->device()->devicePixelRatio(), mode);
+                QRect pmr(QPoint(0, 0), pixmap.deviceIndependentSize().toSize());
                 pmr.moveCenter(vCheckRect.center());
                 painter->setPen(textBrush.color());
                 if (checkable && checked)
@@ -5921,25 +5920,35 @@ qreal PlastikStyle::defaultDPI() const
 {
     return QGuiApplication::primaryScreen()->logicalDotsPerInchX(); // might be another function
 }
-qreal PlastikStyle::dpiScaled(qreal value, qreal dpi) const
+qreal PlastikStyle::dpiScaled(qreal toScale, qreal dpi) const
 {
-    return value*dpi/baseDPI;
+    return toScale*dpi/baseDPI;
 }
-qreal PlastikStyle::dpiScaled(qreal value, const QStyleOption* option) const
+qreal PlastikStyle::dpiScaled(qreal toScale, const QStyleOption* option) const
 {
     qreal dpi = defaultDPI();
     if(option)
     {
         dpi = option->fontMetrics.fontDpi();
     }
-    return dpiScaled(value, dpi);
+    return dpiScaled(toScale, dpi);
 }
 
-qreal PlastikStyle::dpiScaled(qreal vale, const QPaintDevice *device) const
+qreal PlastikStyle::dpiScaled(qreal toScale, const QPaintDevice *device) const
 {
-    return dpiScaled(vale, device->logicalDpiX());
+    return dpiScaled(toScale, device->logicalDpiX());
 }
 
+qreal PlastikStyle::dpi(const QStyleOption* option) const
+{
+    if(QCoreApplication::testAttribute(Qt::AA_Use96Dpi))
+    {
+        return 96;
+    }
 
+    if(option) return option -> fontMetrics.fontDpi();
+
+    return defaultDPI(); // fallback, if no option is given
+}
 
 

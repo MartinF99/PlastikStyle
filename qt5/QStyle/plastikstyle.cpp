@@ -2844,12 +2844,12 @@ void PlastikStyle::drawControl(ControlElement element, const QStyleOption *optio
                         button.palette = menuItem->palette;
                         proxy()->drawPrimitive(PE_IndicatorCheckBox, &button, painter, widget);
                     } else if (checked) {
-                        int iconSize = qMax(menuItem->maxIconWidth, 20);
+                        int iconSize = qMax(menuItem->maxIconWidth, (int)dpiScaled(20, option));
                         QRect sunkenRect(option->rect.left() + 1,
                                          option->rect.top() + (option->rect.height() - iconSize) / 2 + 1,
                                          iconSize, iconSize);
-                        sunkenRect = visualRect(menuItem->direction, menuItem->rect, sunkenRect);
-
+                        QRect vSunkenRect = visualRect(menuItem->direction, menuItem->rect, sunkenRect);
+                        sunkenRect.moveCenter(vSunkenRect.center());
                         QStyleOption opt = *option;
                         opt.state |= State_Sunken;
                         opt.rect = sunkenRect;
@@ -3547,11 +3547,11 @@ void PlastikStyle::drawControl(ControlElement element, const QStyleOption *optio
                     bool sunken = (scrollBar->state & State_Sunken);
 
                     if (isEnabled) {
-                        QLinearGradient gradient(pixmapRect.left(), pixmapRect.center().y(),
-                                                 pixmapRect.right(), pixmapRect.center().y());
+                        QLinearGradient gradient(pixmapRect.left(), pixmapRect.top(),
+                                                 pixmapRect.right(), pixmapRect.top());
                         if (horizontal)
-                            gradient = QLinearGradient(pixmapRect.center().x(), pixmapRect.top(),
-                                                 pixmapRect.center().x(), pixmapRect.bottom());
+                            gradient = QLinearGradient(pixmapRect.left(), pixmapRect.top(),
+                                                 pixmapRect.right(), pixmapRect.bottom());
 
                         if (sunken) {
                             gradient.setColorAt(0, gradientStartColor.lighter(110));

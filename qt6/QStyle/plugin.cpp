@@ -44,7 +44,7 @@
 
 
 
-class PlastikStylePlugin : public QStylePlugin
+class Plastik6StylePlugin : public QStylePlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QStyleFactoryInterface" FILE "plastik.json")
@@ -53,7 +53,7 @@ public:
     QStyle *create(const QString &key);
 };
 
-QStyle *PlastikStylePlugin::create(const QString &key)
+QStyle *Plastik6StylePlugin::create(const QString &key)
 {
     if (key == "plastik")
         return new PlastikStyle;
