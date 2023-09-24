@@ -2837,11 +2837,11 @@ void PlastikStyle::drawControl(ControlElement element, const QStyleOption *optio
                     } else if (checked) {
                         qreal iconMinSize = dpiScaled(20, option);
                         int iconSize = qMax(menuItem->maxIconWidth, (int)iconMinSize);
-                        QRect sunkenRect(option->rect.left() + 1,
+                        QRect sunkenRect(option->rect.left() + menuItemHMargin + windowsItemFrame - 2,
                                          option->rect.top() + (option->rect.height() - iconSize) / 2 + 1,
                                          iconSize, iconSize);
-                        QRect vSunkenRect = visualRect(menuItem->direction, menuItem->rect, sunkenRect);
-                        sunkenRect.moveCenter(vSunkenRect.center());
+                        sunkenRect = visualRect(menuItem->direction, menuItem->rect, sunkenRect);
+                        //sunkenRect.moveCenter(vSunkenRect.center());
                         QStyleOption opt = *option;
                         opt.state |= State_Sunken;
                         opt.rect = sunkenRect;

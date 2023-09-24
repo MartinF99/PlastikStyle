@@ -2845,11 +2845,11 @@ void PlastikStyle::drawControl(ControlElement element, const QStyleOption *optio
                         proxy()->drawPrimitive(PE_IndicatorCheckBox, &button, painter, widget);
                     } else if (checked) {
                         int iconSize = qMax(menuItem->maxIconWidth, (int)dpiScaled(20, option));
-                        QRect sunkenRect(option->rect.left() + 1,
+                        QRect sunkenRect(option->rect.left() + windowsItemFrame + menuItemHMargin - 1,
                                          option->rect.top() + (option->rect.height() - iconSize) / 2 + 1,
                                          iconSize, iconSize);
-                        QRect vSunkenRect = visualRect(menuItem->direction, menuItem->rect, sunkenRect);
-                        sunkenRect.moveCenter(vSunkenRect.center());
+                        sunkenRect = visualRect(menuItem->direction, menuItem->rect, sunkenRect);
+                        //sunkenRect.moveCenter(vSunkenRect.center());
                         QStyleOption opt = *option;
                         opt.state |= State_Sunken;
                         opt.rect = sunkenRect;
