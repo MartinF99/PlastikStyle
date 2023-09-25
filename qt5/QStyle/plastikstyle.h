@@ -2,6 +2,7 @@
 #define PLASTIKSTYLE_H
 #include <QProxyStyle>
 #include <QElapsedTimer>
+#include <QColor>
 
 class QProgressBar;
 
@@ -57,8 +58,18 @@ protected:
     bool event(QEvent *event) override;
     void startProgressAnimation(QProgressBar *bar);
     void stopProgressAnimation(QProgressBar *bar);
-
+    // scaling support, scale by DPI
+    qreal dpiScaled(qreal toScale, qreal dpi) const;
+    qreal dpiScaled(qreal toScale, const QStyleOption* option) const;
+    qreal dpiScaled(qreal toScale, const QPaintDevice* device) const;
+    qreal defaultDPI() const; // return 96 or primary Screen dpi
+    qreal dpi(const QStyleOption* option) const;
 private:
+    QColor darker(QColor color) const;
+    QColor lighter(QColor color) const;
+    void drawFusionMenuItem(const QStyleOption* option, QPainter* painter, const QWidget* widget) const;
+    const qreal baseDPI=96; // doesn't work on mac'
+    const int menuItemHMargin = 3;
     int animateStep;
     QList<QProgressBar *> bars;
     int progressBarAnimateTimer;

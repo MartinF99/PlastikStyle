@@ -6,6 +6,9 @@
 //class QStyleOptionSlider;
 class QProgressBar;
 
+
+
+
 class PlastikStyle : public QProxyStyle
 {
     Q_OBJECT
@@ -59,8 +62,14 @@ protected:
     void startProgressAnimation(QProgressBar *bar);
     void stopProgressAnimation(QProgressBar *bar);
     //void drawSliderGroove(const QStyleOptionSlider *slider, QPainter *painter, QWidget *widget=nullptr);
-
+    qreal dpiScaled(qreal toScale, qreal dpi) const;
+    qreal dpiScaled(qreal toScale, const QStyleOption* option) const;
+    qreal dpiScaled(qreal toScale, const QPaintDevice* device) const;
+    qreal dpi(const QStyleOption* option) const;
+    qreal defaultDPI() const; // return 96 or primary Screen dpi
 private:
+    const qreal baseDPI=96; // doesn't work on mac'
+    const int menuItemHMargin = 3;
     int animateStep;
     QList<QProgressBar *> bars;
     int progressBarAnimateTimer;
