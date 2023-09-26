@@ -56,3 +56,12 @@ currently this does not support DCMAKE_INSTALL_PREFIX at all
 #### For both Qt5 and Qt6:
     - You can simply set QT_QPA_PLATFORMTHEME=qt5ct 
     - Setting QT_STYLE_OVERRIDE to plastik globally should work as well
+
+## Installing
+Currently installing with your package manager is only possible on opensuse
+### OpenSUSE
+add the zypper repository with :
+        sudo zypper ar https://download.opensuse.org/repositories/home:/MartinF99/openSUSE_Tumbleweed/ plastikstyle
+
+then install the packages
+PlastikStyle-qt5 and PlastikStyle-qt6
