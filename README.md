@@ -61,6 +61,7 @@ currently this does not support DCMAKE_INSTALL_PREFIX at all
 Currently installing with your package manager is only possible on opensuse
 ### OpenSUSE
 add the zypper repository with :
+        
         sudo zypper ar https://download.opensuse.org/repositories/home:/MartinF99/openSUSE_Tumbleweed/ plastikstyle
 
 then install the packages
