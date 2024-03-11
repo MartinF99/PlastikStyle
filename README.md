@@ -31,7 +31,7 @@ e.g:o
 
     cd build
 
-    cmake ../
+    cmake -DCMAKE_INSTALL_PREFIX=/usr ../
 
     make
 
