@@ -1028,8 +1028,10 @@ static void qt_draw_partial_frame(QPainter *painter, const QStyleOptionComplex *
     bool reverse = option->direction == Qt::RightToLeft;
     QStyleOptionFrame frameOpt;
 #ifndef QT_NO_LINEEDIT
-    if (QLineEdit *lineedit = widget->findChild<QLineEdit *>())
-        frameOpt.initFrom(lineedit);
+    if(widget) {
+        if (QLineEdit *lineedit = widget->findChild<QLineEdit *>())
+            frameOpt.initFrom(lineedit);
+    }
 #else
     Q_UNUSED(widget)
 #endif // QT_NO_LINEEDIT
@@ -5585,26 +5587,28 @@ QPalette PlastikStyle::standardPalette() const
 */
 void PlastikStyle::polish(QWidget *widget)
 {
-    if (qobject_cast<QPushButton *>(widget)
+    if(widget)
+    {
+        if (qobject_cast<QPushButton *>(widget)
 #ifndef QT_NO_COMBOBOX
-        || qobject_cast<QComboBox *>(widget)
+            || qobject_cast<QComboBox *>(widget)
 #endif
 #ifndef QT_NO_SPINBOX
-        || qobject_cast<QAbstractSpinBox *>(widget)
+            || qobject_cast<QAbstractSpinBox *>(widget)
 #endif
-        || qobject_cast<QCheckBox *>(widget)
+            || qobject_cast<QCheckBox *>(widget)
 #ifndef QT_NO_GROUPBOX
-        || qobject_cast<QGroupBox *>(widget)
+            || qobject_cast<QGroupBox *>(widget)
 #endif
-        || qobject_cast<QRadioButton *>(widget)
+            || qobject_cast<QRadioButton *>(widget)
 #ifndef QT_NO_SPLITTER
-        || qobject_cast<QSplitterHandle *>(widget)
+            || qobject_cast<QSplitterHandle *>(widget)
 #endif
 #ifndef QT_NO_TABBAR
-        || qobject_cast<QTabBar *>(widget)
+            || qobject_cast<QTabBar *>(widget)
 #endif
-        ) {
-        widget->setAttribute(Qt::WA_Hover);
+            ) {
+            widget->setAttribute(Qt::WA_Hover);
     }
 
 QT_END_NAMESPACE
@@ -5634,6 +5638,7 @@ QT_END_NAMESPACE
     if (qobject_cast<QPushButton *>(widget) || qobject_cast<QToolButton *>(widget))
         widget->installEventFilter(this);
 #endif
+    }
 }
 
 /*!
@@ -5641,6 +5646,7 @@ QT_END_NAMESPACE
 */
 void PlastikStyle::unpolish(QWidget *widget)
 {
+    if(widget){
     if (qobject_cast<QPushButton *>(widget)
 #ifndef QT_NO_COMBOBOX
         || qobject_cast<QComboBox *>(widget)
@@ -5693,6 +5699,7 @@ void PlastikStyle::unpolish(QWidget *widget)
     if (qobject_cast<QPushButton *>(widget) || qobject_cast<QToolButton *>(widget))
         widget->removeEventFilter(this);
 #endif
+}
 }
 
 /*!

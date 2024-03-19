@@ -1024,11 +1024,19 @@ PlastikStyle::~PlastikStyle()
 static void qt_draw_partial_frame(QPainter *painter, const QStyleOptionComplex *option,
                                   const QRect &rect, const QWidget *widget, const QStyle *style)
 {
+
+    // need to check whether widget == nullptr
     bool reverse = option->direction == Qt::RightToLeft;
     QStyleOptionFrame frameOpt;
 #ifndef QT_NO_LINEEDIT
-    if (QLineEdit *lineedit = widget->findChild<QLineEdit *>())
-        frameOpt.initFrom(lineedit);
+    if(widget) // do we even have a widget available to do a search with?
+    {
+        QLineEdit *lineedit = widget->findChild<QLineEdit *>(); //this seems to crash kcm_kscreen
+        if (lineedit){
+            frameOpt.initFrom(lineedit);
+
+        }
+    }
 #else
     Q_UNUSED(widget)
 #endif // QT_NO_LINEEDIT
