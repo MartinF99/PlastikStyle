@@ -58,7 +58,7 @@ currently this does not support DCMAKE_INSTALL_PREFIX at all
     - Setting QT_STYLE_OVERRIDE to plastik globally should work as well
 
 ## Installing
-Currently installing with your package manager is only possible on opensuse
+Currently installing with your package manager is only possible on opensuse and fedora
 ### OpenSUSE
 add the zypper repository with :
         
@@ -66,3 +66,22 @@ add the zypper repository with :
 
 then install the packages
 PlastikStyle-qt5 and PlastikStyle-qt6
+
+### Fedora 37 to 39
+add the copr repository with :
+        
+        sudo dnf copr enable hazel-bunny/ports 
+
+then install the packages :
+
+        sudo dnf install plastikstyle
+
+### Fedora 40 and above
+add the copr repository with :
+        
+        sudo dnf copr enable hazel-bunny/ricing
+
+then install the packages :
+
+        sudo dnf install plastikstyle
+        
