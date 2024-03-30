@@ -59,6 +59,12 @@ currently this does not support DCMAKE_INSTALL_PREFIX at all
 
 ## Installing
 Currently installing with your package manager is only possible on opensuse and fedora
+
+### Debian
+currently debian and derivates do not have packages available, to install compile from source. To install the necessary dependencies install
+
+        sudo apt install qt6-base-dev qt5-base-dev cmake make 
+
 ### OpenSUSE
 add the zypper repository with :
         
