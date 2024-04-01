@@ -13,12 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: create builddir
-      run: mkdir ./build
-    - name: change to builddir
-      run: cd build
     - name: cmake
-      run: cmake ../
+      run: cmake
     - name: make
       run: make
     - name: make check
