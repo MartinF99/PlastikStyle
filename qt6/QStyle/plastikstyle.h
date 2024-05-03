@@ -1,6 +1,7 @@
 #ifndef PLASTIKSTYLE_H_INCLUDED
 #define PLASTIKSTYLE_H_INCLUDED
 #include <QProxyStyle>
+#include <QCommonStyle>
 #include <QElapsedTimer>
 
 //class QStyleOptionSlider;
@@ -9,7 +10,7 @@ class QProgressBar;
 
 
 
-class PlastikStyle : public QProxyStyle
+class PlastikStyle : public QCommonStyle
 {
     Q_OBJECT
 
@@ -74,6 +75,16 @@ private:
     QList<QProgressBar *> bars;
     int progressBarAnimateTimer;
     QElapsedTimer timer;
+
+    QList<const QWidget *> seenAlt; // from windowsstyle
+    bool alt_down=false;
+    bool hasSeenAlt(const QWidget *widget) const;
+
+    QColor inactiveCaptionText;
+        QColor activeCaptionColor;
+        QColor activeGradientCaptionColor;
+        QColor inactiveCaptionColor;
+        QColor inactiveGradientCaptionColor;
 };
 
 #endif // PLASTIKSTYLE_H_INCLUDED
