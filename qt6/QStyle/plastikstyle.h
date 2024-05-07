@@ -85,6 +85,10 @@ private:
         QColor activeGradientCaptionColor;
         QColor inactiveCaptionColor;
         QColor inactiveGradientCaptionColor;
+
+    bool two_buttons_bottom = true;
+    void draw_subline_two_buttons(const QStyleOption *scrollBar, QPainter *painter, const QWidget *widget=nullptr) const;
+    void draw_subline_one_button(const QStyleOption* option, QPainter* painter, const QWidget* widget = nullptr) const;
 };
 
 #endif // PLASTIKSTYLE_H_INCLUDED
