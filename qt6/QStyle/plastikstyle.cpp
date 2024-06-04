@@ -6284,6 +6284,26 @@ bool PlastikStyle::hasSeenAlt(const QWidget *widget) const
     return seenAlt.contains(widget);
 }
 
+
+void PlastikStyle::draw_addline_two_buttons(const QStyleOption *option, QPainter *painter, const QWidget *widget) const
+{
+    if (const QStyleOptionSlider *scrollBar = qstyleoption_cast<const QStyleOptionSlider*>(option))
+    {
+        QColor borderColor = option->palette.window().color().darker(178);
+        QColor alphaCornerColor;
+        if(widget)
+        {
+            alphaCornerColor = mergedColors(option->palette.color(widget->backgroundRole()), borderColor);
+        }
+        else
+        {
+            alphaCornerColor = mergedColors(option->palette.window().color(), borderColor);
+        }
+
+        QColor gradientStartColor = option->palette.button().color().lighter(104);
+        QColor gradientStopColor = option->palette.button().color().darker(105);
+    }
+}
 void PlastikStyle::draw_subline_two_buttons(const QStyleOption *option, QPainter* painter, const QWidget* widget) const
 {
     if(const QStyleOptionSlider *scrollBar = qstyleoption_cast< const QStyleOptionSlider*>(option))
