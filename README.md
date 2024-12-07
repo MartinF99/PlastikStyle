@@ -89,7 +89,9 @@ then install the packages :
         sudo dnf install plastikstyle
         
 ### Archlinux
-    An archlinux PKGBUILD can be found on the AUR
-    https://aur.archlinux.org/packages/plastikstyle-qt5 for qt5
-    https://aur.archlinux.org/packages/plastikstyle-qt6 for qt6
+
+An archlinux PKGBUILD can be found on the AUR
+
+- https://aur.archlinux.org/packages/plastikstyle-qt5 for qt5
+- https://aur.archlinux.org/packages/plastikstyle-qt6 for qt6
     
