@@ -27,15 +27,12 @@ e.g:o
     
     cd into cloned repo (usually PlastikStyle)
     
-    mkdir build
 
-    cd build
+    cmake -B build -S ./ -DCMAKE_INSTALL_PREFIX=/usr
 
-    cmake -DCMAKE_INSTALL_PREFIX=/usr ../
+    cmake -B build --build
 
-    make
-
-    make install
+    make -B build --install
 
 now select "Plastik" for both Qt5 and Qt6
 
@@ -93,4 +90,6 @@ then install the packages :
         
 ### Archlinux
     An archlinux PKGBUILD can be found on the AUR
-    https://aur.archlinux.org/packages/plastikstyle
+    https://aur.archlinux.org/packages/plastikstyle-qt5 for qt5
+    https://aur.archlinux.org/packages/plastikstyle-qt6 for qt6
+    
