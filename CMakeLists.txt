@@ -27,6 +27,8 @@ option(ENABLE_QT6 "build with QT6" OFF)
 
 option(ENABLE_QSTYLE "build Qstyles" ON)
 
+add_subdirectory(color-schemes)
+
 if(ENABLE_QT5 OR ENABLE_ALL)
 		add_subdirectory(qt5)
 endif()
