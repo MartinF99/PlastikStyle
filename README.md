@@ -6,6 +6,8 @@ This is a fork of QPlastiqueStyle from qt5-styleplugins and a port to qt6.
 
 ## Requirements
 
+Extra-cmake-modules - for finding the qt plugin directory
+
 ### For QT5:
 Qt 5.15 and CMake 3.16
 
