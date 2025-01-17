@@ -12,6 +12,13 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+#extra cmake modules, to not directly rely on qmake
+
+set(KF5_MIN_VERSION "5.102.0")
+
+find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
+
 option(ENABLE_ALL "build with QT5 and QT6" ON)
 
 option(ENABlE_QT5 "build with QT5" OFF)
