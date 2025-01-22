@@ -1,6 +1,7 @@
 # Plastik style
 
 This is a fork of QPlastiqueStyle from qt5-styleplugins and a port to qt6.
+This project only supports Linux. 
 ----------------------
 
 ## Requirements
