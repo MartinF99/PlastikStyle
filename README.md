@@ -73,24 +73,26 @@ add the zypper repository with :
 then install the packages
 PlastikStyle-qt5 and PlastikStyle-qt6
 
-### Fedora 37 to 39
-add the copr repository with :
-        
-        sudo dnf copr enable hazel-bunny/ports 
-
-then install the packages :
-
-        sudo dnf install plastikstyle
-
-### Fedora 40 and above
-add the copr repository with :
+### Fedora
+Add the copr repository with :
         
         sudo dnf copr enable hazel-bunny/ricing
 
-then install the packages :
+Then install the packages :
 
         sudo dnf install plastikstyle
+
+### RHEL and clones versions 10 and greater
+For Qt 5 support, enable the [EPEL repository](https://www.redhat.com/en/blog/install-epel-linux) if it's not already enabled
+
+Add the copr repository with :
         
+        sudo dnf copr enable hazel-bunny/ricing
+
+Then install the packages :
+
+        sudo dnf install plastikstyle
+           
 ### Archlinux
 
 An archlinux PKGBUILD can be found on the AUR
