@@ -39,26 +39,22 @@
 **
 ****************************************************************************/
 
-#include <QStylePlugin>
 #include "plastikstyle.h"
+#include <QStylePlugin>
 
-
-
-class Plastik6StylePlugin : public QStylePlugin
-{
-    Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QStyleFactoryInterface" FILE "plastik.json")
+class Plastik6StylePlugin : public QStylePlugin {
+  Q_OBJECT
+  Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QStyleFactoryInterface" FILE
+                        "plastik.json")
 
 public:
-    QStyle *create(const QString &key);
+  QStyle *create(const QString &key);
 };
 
-QStyle *Plastik6StylePlugin::create(const QString &key)
-{
-    if (key == "plastik")
-        return new PlastikStyle;
-    return 0;
+QStyle *Plastik6StylePlugin::create(const QString &key) {
+  if (key == "plastik")
+    return new PlastikStyle;
+  return 0;
 }
-
 
 #include "plugin.moc"

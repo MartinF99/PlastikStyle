@@ -7,12 +7,38 @@ find_package(Qt6 CONFIG REQUIRED Core Widgets)
 
 include(KDEInstallDirs6)
 
+set(widgets_SRC controls/frame.cpp
+    controls/button.cpp
+    controls/dockwidget.cpp
+    controls/frame.cpp
+    controls/itemview.cpp
+    controls/lineedit.cpp
+    controls/mainwindow.cpp
+    controls/tabbar.cpp
+    controls/toolbar.cpp
+    controls/widget.cpp
+    controls/window.cpp
+    controls/header.cpp
+    controls/menu.cpp
+    )
+
+# Seperate the actual source files for the Style into its own thing
+set(style_SRC
+    plastikstyle.h
+    plastikstyle.cpp
+    plastikstylehelper.h
+    plastikstylehelper.cpp
+    ${widgets_SRC}
+)
+
+
 set(plastikstyle6_SRC
   plastikstyle.cpp
   qhexstring.h
   qstylecache.h
   qstylehelper.cpp
   plugin.cpp
+  ${style_SRC}
 )
 
 # Tell CMake to create the helloworld executable
