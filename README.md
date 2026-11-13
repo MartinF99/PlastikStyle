@@ -1,3 +1,6 @@
+# I will be developing PlastikStyle on Codeberg in the future
+New repository: https://codeberg.org/Keit99/PlastikStyle
+
 # Plastik style
 
 This is a fork of QPlastiqueStyle from qt5-styleplugins and a port to qt6.
